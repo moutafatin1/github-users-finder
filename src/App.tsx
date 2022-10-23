@@ -13,19 +13,35 @@ const App = () => {
   const navigate = useNavigate();
   const username = searchParams.get('username');
 
-  const { data, isError, isFetching, isLoading, error, refetch } = useQuery(
-    ['getUser'],
-    async () => {
+  const { data, isError, isFetching, isLoading, error, refetch, status } =
+    useQuery(['getUser'], async () => {
       const response = await fetch(`https://api.github.com/users/${username}`);
+      if (response.status === 404) {
+        throw new Error('Not Found');
+      }
       return (await response.json()) as GithubUser;
-    }
-  );
+    });
   useEffect(() => {
     refetch();
   }, [username, refetch]);
 
   if (isError) {
-    return <p>error</p>;
+    return (
+      <main className='flex h-screen justify-center  bg-very-dark-blue p-8 font-source-sans-pro md:items-center'>
+        <div className='flex w-full max-w-3xl flex-col gap-5'>
+          <h1 className='text-2xl font-bold text-slate-50 md:text-3xl lg:text-4xl'>
+            DevFinder
+          </h1>
+          <SearchInput />
+
+          <div className='items-start gap-10 space-y-8 rounded-xl bg-dark-blue p-8 md:flex md:space-y-0'>
+            <h2 className='mx-auto text-center text-4xl text-red-500'>
+              User Not Found
+            </h2>
+          </div>
+        </div>
+      </main>
+    );
   }
 
   return (
@@ -37,7 +53,7 @@ const App = () => {
         <SearchInput />
 
         <div className='items-start gap-10 space-y-8 rounded-xl bg-dark-blue p-8 md:flex md:space-y-0'>
-          {isFetching || isLoading ? (
+          {(isFetching || isLoading) && !isError ? (
             <span className='flex items-center justify-center'>
               <LoadingPuff />
             </span>

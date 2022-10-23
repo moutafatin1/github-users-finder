@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { SearchInput } from './components';
 import { Details } from './components/Details/Details';
 import { LoadingPuff } from './components/LoadingPuff';
@@ -10,17 +10,18 @@ import { GithubUser } from './types';
 
 const App = () => {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const username = searchParams.get('username');
 
-  const { data, isError, isFetching, isLoading, error, refetch, status } =
-    useQuery(['getUser'], async () => {
+  const { data, isError, isFetching, isLoading, refetch } = useQuery(
+    ['getUser'],
+    async () => {
       const response = await fetch(`https://api.github.com/users/${username}`);
       if (response.status === 404) {
         throw new Error('Not Found');
       }
       return (await response.json()) as GithubUser;
-    });
+    }
+  );
   useEffect(() => {
     refetch();
   }, [username, refetch]);

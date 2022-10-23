@@ -9,6 +9,9 @@ module.exports = {
         'dark-blue': '#1e2a47',
         primary: '#0079ff',
       },
+      fontFamily: {
+        'source-sans-pro': ['Source Sans Pro', 'sans-serif'],
+      },
     },
   },
   plugins: [require('@tailwindcss/forms')],

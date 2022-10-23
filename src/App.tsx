@@ -1,11 +1,11 @@
 import { SearchInput } from './components';
-import { Details } from './components/Details';
-import { Stats } from './components/Stats';
+import { Details } from './components/Details/Details';
+import { Stats } from './components/Stats/Stats';
 import { UserInfo } from './components/UserInfo';
 
 const App = () => {
   return (
-    <main className='flex h-screen  justify-center bg-very-dark-blue p-8 md:items-center'>
+    <main className='flex h-screen justify-center  bg-very-dark-blue p-8 font-source-sans-pro md:items-center'>
       <div className='flex w-full max-w-3xl flex-col gap-5'>
         <h1 className='text-2xl font-bold text-slate-50 md:text-3xl lg:text-4xl'>
           DevFinder

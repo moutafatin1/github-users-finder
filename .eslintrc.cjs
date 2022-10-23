@@ -40,6 +40,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/require-default-props': 'off',
     'react/button-has-type': 'off',
+    'react/self-closing-comp': 'off',
     'no-unused-vars': [1, { args: 'after-used', argsIgnorePattern: '^_' }],
   },
 };
